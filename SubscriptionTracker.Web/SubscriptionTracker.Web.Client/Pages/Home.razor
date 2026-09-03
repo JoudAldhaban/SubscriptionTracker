@@ -1,0 +1,484 @@
+﻿@page "/"
+
+@using Microsoft.AspNetCore.Components.Web
+@rendermode @(new InteractiveWebAssemblyRenderMode(prerender: false))
+
+@using SubscriptionTracker.Web.Client.Models
+@using SubscriptionTracker.Web.Client.Observers
+@using SubscriptionTracker.Web.Client.Services
+@using SubscriptionTracker.Web.Client.Strategies
+
+@inject SubscriptionService SubscriptionService
+
+<PageTitle>Subscription Tracker</PageTitle>
+
+<div class="app-page">
+
+    <header class="site-header">
+        <a class="brand" href="/">
+            Subscription Tracker
+        </a>
+    </header>
+
+    <main class="main-content">
+
+        <section class="hero">
+
+            <div class="hero-text">
+                <p class="eyebrow">
+                    SUBSCRIPTION TRACKER
+                </p>
+
+				<h1>Track less . Know More</h1>
+
+                <p class="hero-description">
+                    See what you pay and what renews next.
+                </p>
+            </div>
+
+            <button class="primary-button add-main-button"
+                    @onclick="ToggleForm">
+
+                @if (showForm)
+                {
+                    <span>Close form</span>
+                }
+                else
+                {
+                    <span>＋ Add subscription</span>
+                }
+
+            </button>
+
+        </section>
+
+        @if (showForm)
+        {
+            <section class="add-panel">
+
+                <div class="panel-heading">
+
+                    <div>
+                        <p class="eyebrow">
+                            NEW SUBSCRIPTION
+                        </p>
+
+                        <h2>Add subscription</h2>
+                    </div>
+
+                    <button class="close-button"
+                            @onclick="ToggleForm">
+                        ×
+                    </button>
+
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(formMessage))
+                {
+                    <p class="form-message">
+                        @formMessage
+                    </p>
+                }
+
+                <form @onsubmit="AddSubscription"
+                      @onsubmit:preventDefault>
+
+                    <div class="form-grid">
+
+                        <div class="field">
+                            <label>Subscription name</label>
+
+                            <input type="text"
+                                   placeholder="e.g. Netflix"
+                                   @bind="subscriptionName" />
+                        </div>
+
+                        <div class="field">
+                            <label>Price</label>
+
+                            <input type="number"
+                                   min="0"
+                                   step="0.01"
+                                   placeholder="0.00"
+                                   @bind="price" />
+                        </div>
+
+                        <div class="field">
+                            <label>Billing cycle</label>
+
+                            <select @bind="billingCycle">
+                                <option value="Monthly">
+                                    Monthly
+                                </option>
+
+                                <option value="Yearly">
+                                    Yearly
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label>Start date</label>
+
+                            <input type="date"
+                                   max="@DateTime.Today.ToString("yyyy-MM-dd")"
+                                   @bind="startDate" />
+                        </div>
+
+                    </div>
+
+                    <div class="form-actions">
+
+                        <button type="button"
+                                class="secondary-button"
+                                @onclick="ToggleForm">
+                            Cancel
+                        </button>
+
+                        <button type="submit"
+                                class="primary-button save-button">
+                            Save subscription
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+        }
+
+        <section class="summary-grid">
+
+            <article class="summary-card">
+
+                <div class="summary-icon lavender">
+                    ◫
+                </div>
+
+                <div class="summary-content">
+                    <p>Monthly average</p>
+
+                    <strong class="purple-text">@(SubscriptionService.GetAverageMonthlyCost().ToString("0.00")) SAR</strong>
+                </div>
+
+            </article>
+
+            <article class="summary-card">
+
+                <div class="summary-icon green">
+                    ●
+                </div>
+
+                <div class="summary-content">
+                    <p>Active subscriptions</p>
+
+                    <strong class="green-text">
+                        @Subscriptions.Count
+                    </strong>
+                </div>
+
+            </article>
+
+            <article class="summary-card next-card">
+
+                <div class="summary-icon yellow">
+                    □
+                </div>
+
+                <div class="summary-content">
+                    <p>Next renewal</p>
+
+                    @if (NextRenewal is null)
+                    {
+                        <strong class="yellow-text">
+                            No renewals yet
+                        </strong>
+                    }
+                    else
+                    {
+                        <strong class="yellow-text">@(NextRenewal.RenewalDate.ToString("MMM dd, yyyy"))</strong>
+                    }
+                </div>
+
+            </article>
+
+        </section>
+
+        <section class="subscriptions-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <p class="eyebrow">
+                        OVERVIEW
+                    </p>
+
+                    <h2>Your subscriptions</h2>
+                </div>
+
+                <button class="reminder-button"
+                        @onclick="CheckReminders">
+                    Check reminders
+                </button>
+
+            </div>
+
+            @if (notificationMessages.Count > 0)
+            {
+                <div class="notifications">
+
+                    @foreach (string message in notificationMessages)
+                    {
+                        <div class="notification">
+                            <span>●</span>
+                            @message
+                        </div>
+                    }
+
+                </div>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(reminderMessage))
+            {
+                <div class="empty-reminder">
+                    @reminderMessage
+                </div>
+            }
+
+            @if (Subscriptions.Count == 0)
+            {
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ＋
+                    </div>
+
+                    <h3>No subscriptions yet</h3>
+
+                    <p>
+                        Add your first subscription to start
+                        tracking payments and renewal dates.
+                    </p>
+
+                    <button class="primary-button"
+                            @onclick="OpenForm">
+                        Add your first subscription
+                    </button>
+
+                </div>
+            }
+            else
+            {
+                <div class="subscriptions-list">
+
+                    @foreach (Subscription subscription in Subscriptions)
+                    {
+                        <article class="subscription-card">
+
+                            <div class="subscription-identity">
+
+                                <div class="subscription-logo">
+                                    @GetFirstLetter(subscription.Name)
+                                </div>
+
+                                <div>
+                                    <h3>@subscription.Name</h3>
+
+                                    <span class="active-status">
+                                        ● Active
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="subscription-detail">
+                                <span>Billing</span>
+
+                                <strong>
+                                    @subscription.GetBillingCycle()
+                                </strong>
+                            </div>
+
+                            <div class="subscription-detail">
+                                <span>Price</span>
+
+                                <strong>@(subscription.Price.ToString("0.00")) SAR</strong>
+                            </div>
+
+                            <div class="subscription-detail">
+                                <span>Next renewal</span>
+
+                                <strong>@(subscription.RenewalDate.ToString("MMM dd, yyyy"))</strong>
+                            </div>
+
+                            <button class="delete-button"
+                                    @onclick="() => DeleteSubscription(subscription)">
+                                Delete
+                            </button>
+
+                        </article>
+                    }
+
+                </div>
+            }
+
+        </section>
+
+    </main>
+
+</div>
+
+@code {
+    private bool showForm;
+
+    private string subscriptionName = string.Empty;
+
+    private decimal price;
+
+    private string billingCycle = "Monthly";
+
+    private DateTime startDate = DateTime.Today;
+
+    private string formMessage = string.Empty;
+
+    private string reminderMessage = string.Empty;
+
+    private readonly RenewalNotifier renewalNotifier = new();
+
+    private readonly AppNotificationObserver appObserver = new();
+
+    private List<string> notificationMessages = new();
+
+    private List<Subscription> Subscriptions =>
+        SubscriptionService.GetSubscriptions();
+
+    private Subscription? NextRenewal =>
+        SubscriptionService.GetNextRenewal();
+
+    protected override void OnInitialized()
+    {
+        renewalNotifier.AddObserver(appObserver);
+    }
+
+    private void ToggleForm()
+    {
+        showForm = !showForm;
+
+        formMessage = string.Empty;
+    }
+
+    private void OpenForm()
+    {
+        showForm = true;
+
+        formMessage = string.Empty;
+    }
+
+    private void AddSubscription()
+    {
+        formMessage = string.Empty;
+
+        if (string.IsNullOrWhiteSpace(subscriptionName))
+        {
+            formMessage =
+                "Please enter the subscription name.";
+
+            return;
+        }
+
+        if (price <= 0)
+        {
+            formMessage =
+                "Please enter a valid price.";
+
+            return;
+        }
+
+        if (startDate.Date > DateTime.Today)
+        {
+            formMessage =
+                "The start date cannot be in the future.";
+
+            return;
+        }
+
+        ICostStrategy strategy;
+
+        if (billingCycle == "Monthly")
+        {
+            strategy =
+                new MonthlyCostStrategy();
+        }
+        else
+        {
+            strategy =
+                new YearlyCostStrategy();
+        }
+
+        Subscription subscription = new(
+            subscriptionName.Trim(),
+            price,
+            startDate,
+            strategy
+        );
+
+        SubscriptionService.AddSubscription(subscription);
+
+        subscriptionName = string.Empty;
+
+        price = 0;
+
+        billingCycle = "Monthly";
+
+        startDate = DateTime.Today;
+
+        showForm = false;
+
+        reminderMessage = string.Empty;
+
+        notificationMessages.Clear();
+    }
+
+    private void DeleteSubscription(
+        Subscription subscription)
+    {
+        SubscriptionService.DeleteSubscription(subscription);
+
+        reminderMessage = string.Empty;
+
+        notificationMessages.Clear();
+    }
+
+    private void CheckReminders()
+    {
+        appObserver.ClearMessages();
+
+        reminderMessage = string.Empty;
+
+        int count = renewalNotifier.CheckRenewals(
+            Subscriptions
+        );
+
+        notificationMessages =
+            new List<string>(appObserver.Messages);
+
+        if (count == 0)
+        {
+            reminderMessage =
+                "No subscriptions renew within the next 3 days.";
+        }
+    }
+
+    private static string GetFirstLetter(
+        string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return "?";
+        }
+
+        return name[0]
+            .ToString()
+            .ToUpper();
+    }
+}

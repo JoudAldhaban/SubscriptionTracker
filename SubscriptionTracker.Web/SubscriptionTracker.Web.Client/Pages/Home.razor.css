@@ -1,0 +1,582 @@
+* {
+    box-sizing: border-box;
+}
+
+.app-page {
+    width: 100vw;
+    min-width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    background: #fbfaf7;
+    color: #20242c;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.site-header {
+    width: 100%;
+    min-height: 70px;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border-bottom: 1px solid #e6e3dd;
+}
+
+.brand {
+    color: #20242c;
+    font-size: 1.4rem;
+    font-weight: 750;
+    text-decoration: none;
+}
+
+.main-content {
+    width: min(1360px, 92%);
+    margin: 0 auto;
+    padding: 55px 0 90px;
+}
+
+.hero {
+    margin-bottom: 42px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.eyebrow {
+    margin: 0 0 10px;
+    color: #87838d;
+    font-size: 0.75rem;
+    font-weight: 750;
+    letter-spacing: 0.14em;
+}
+
+.hero h1 {
+    margin: 0;
+    color: #20242c;
+    font-size: clamp(2.8rem, 6vw, 4.7rem);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+}
+
+.hero-description {
+    margin: 20px 0 0;
+    color: #70727a;
+    font-size: 1.3rem;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.primary-button {
+    min-height: 50px;
+    padding: 0 24px;
+    border: none;
+    border-radius: 12px;
+    background: #7461d1;
+    color: #ffffff;
+    font-weight: 650;
+    box-shadow: 0 7px 18px rgba(116, 97, 209, 0.17);
+}
+
+    .primary-button:hover {
+        background: #6653c3;
+    }
+
+.summary-grid {
+    margin-bottom: 55px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.summary-card {
+    min-width: 0;
+    min-height: 125px;
+    padding: 23px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: #ffffff;
+    border: 1px solid #e5e2dd;
+    border-radius: 17px;
+}
+
+.summary-icon {
+    width: 62px;
+    height: 62px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border-radius: 16px;
+    font-size: 1.5rem;
+    font-weight: 750;
+}
+
+    .summary-icon.lavender {
+        color: #6d59cb;
+        background: #eeeafd;
+    }
+
+    .summary-icon.green {
+        color: #347d53;
+        background: #e4f1e1;
+    }
+
+    .summary-icon.yellow {
+        color: #b17d13;
+        background: #fff2c9;
+    }
+
+.summary-content {
+    min-width: 0;
+}
+
+    .summary-content p {
+        margin: 0 0 8px;
+        color: #676a72;
+    }
+
+    .summary-content strong {
+        display: block;
+        overflow-wrap: anywhere;
+        font-size: 1.5rem;
+    }
+
+.purple-text {
+    color: #6d59cb;
+}
+
+.green-text {
+    color: #347d53;
+}
+
+.yellow-text {
+    color: #b17d13;
+}
+
+.add-panel {
+    margin-bottom: 35px;
+    padding: 30px;
+    background: #ffffff;
+    border: 1px solid #ddd9e8;
+    border-radius: 20px;
+    box-shadow: 0 14px 35px rgba(46, 42, 70, 0.07);
+}
+
+.panel-heading,
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.panel-heading {
+    margin-bottom: 25px;
+}
+
+    .panel-heading h2,
+    .section-heading h2 {
+        margin: 0;
+        font-size: 1.8rem;
+    }
+
+.close-button {
+    width: 42px;
+    height: 42px;
+    border: none;
+    border-radius: 50%;
+    background: #f0edf9;
+    color: #6254ad;
+    font-size: 1.5rem;
+}
+
+.form-message {
+    padding: 12px 15px;
+    color: #9d4141;
+    background: #fff0f0;
+    border-radius: 10px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.field {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+    .field label {
+        color: #4e5158;
+        font-size: 0.9rem;
+        font-weight: 650;
+    }
+
+    .field input,
+    .field select {
+        width: 100%;
+        height: 48px;
+        padding: 0 14px;
+        color: #282b32;
+        background: #ffffff;
+        border: 1px solid #d8d5d0;
+        border-radius: 11px;
+        outline: none;
+    }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #7461d1;
+            box-shadow: 0 0 0 3px rgba(116, 97, 209, 0.11);
+        }
+
+.form-actions {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.secondary-button {
+    min-height: 48px;
+    padding: 0 22px;
+    color: #555861;
+    background: #ffffff;
+    border: 1px solid #d4d1cc;
+    border-radius: 11px;
+}
+
+.save-button {
+    min-width: 180px;
+}
+
+.section-heading {
+    margin-bottom: 20px;
+}
+
+.reminder-button {
+    min-height: 46px;
+    padding: 0 18px;
+    color: #6d59cb;
+    background: #ffffff;
+    border: 1px solid #7865d3;
+    border-radius: 11px;
+    font-weight: 650;
+}
+
+    .reminder-button:hover {
+        background: #f2effd;
+    }
+
+.notifications {
+    margin-bottom: 18px;
+    display: grid;
+    gap: 10px;
+}
+
+.notification {
+    padding: 14px 17px;
+    color: #4e438f;
+    background: #efecff;
+    border-radius: 11px;
+}
+
+    .notification span {
+        margin-right: 8px;
+        color: #7461d1;
+    }
+
+.empty-reminder {
+    margin-bottom: 18px;
+    padding: 14px 17px;
+    color: #775e1c;
+    background: #fff5d8;
+    border-radius: 11px;
+}
+
+.subscriptions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.subscription-card {
+    min-width: 0;
+    min-height: 104px;
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr) auto;
+    align-items: center;
+    gap: 20px;
+    background: #ffffff;
+    border: 1px solid #e4e1dc;
+    border-radius: 17px;
+}
+
+.subscription-identity {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.subscription-logo {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    color: #ffffff;
+    background: #7461d1;
+    border-radius: 14px;
+    font-size: 1.35rem;
+    font-weight: 750;
+}
+
+.subscription-identity h3 {
+    margin: 0 0 5px;
+    overflow-wrap: anywhere;
+}
+
+.active-status {
+    color: #3a8959;
+    font-size: 0.83rem;
+}
+
+.subscription-detail {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+    .subscription-detail span {
+        color: #888a90;
+        font-size: 0.82rem;
+    }
+
+    .subscription-detail strong {
+        overflow-wrap: anywhere;
+        font-size: 0.96rem;
+    }
+
+.delete-button {
+    padding: 9px 14px;
+    color: #a04747;
+    background: #fff3f3;
+    border: none;
+    border-radius: 9px;
+}
+
+.empty-state {
+    padding: 60px 25px;
+    text-align: center;
+    background: #ffffff;
+    border: 1px dashed #cbc7bf;
+    border-radius: 20px;
+}
+
+.empty-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 17px;
+    display: grid;
+    place-items: center;
+    color: #6d59cb;
+    background: #eeeafd;
+    border-radius: 18px;
+    font-size: 1.8rem;
+}
+
+.empty-state h3 {
+    margin: 0 0 8px;
+}
+
+.empty-state p {
+    max-width: 470px;
+    margin: 0 auto 22px;
+    color: #767981;
+    line-height: 1.6;
+}
+
+@media (max-width: 950px) {
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .next-card {
+        grid-column: 1 / -1;
+    }
+
+    .subscription-card {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .delete-button {
+        justify-self: start;
+    }
+}
+
+@media (max-width: 650px) {
+    .site-header {
+        min-height: 60px;
+        padding: 0 20px;
+    }
+
+    .brand {
+        font-size: 1.08rem;
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 35px 18px 65px;
+    }
+
+    .hero {
+        margin-bottom: 30px;
+        align-items: stretch;
+        flex-direction: column;
+        gap: 23px;
+    }
+
+        .hero h1 {
+            max-width: 330px;
+            font-size: 2.65rem;
+            line-height: 1.03;
+        }
+
+    .hero-description {
+        margin-top: 14px;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .add-main-button {
+        width: 100%;
+    }
+
+    .add-panel {
+        padding: 22px 18px;
+        border-radius: 17px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+        .form-actions button {
+            width: 100%;
+        }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 42px;
+    }
+
+    .next-card {
+        grid-column: auto;
+    }
+
+    .summary-card {
+        min-height: 98px;
+        padding: 17px;
+        gap: 15px;
+    }
+
+    .summary-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        font-size: 1.2rem;
+    }
+
+    .summary-content p {
+        margin-bottom: 5px;
+        font-size: 0.85rem;
+    }
+
+    .summary-content strong {
+        font-size: 1.18rem;
+    }
+
+    .section-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+        .section-heading h2 {
+            font-size: 1.65rem;
+        }
+
+    .reminder-button {
+        width: 100%;
+    }
+
+    .subscription-card {
+        padding: 18px;
+        grid-template-columns: 1fr 1fr;
+        gap: 19px 15px;
+    }
+
+    .subscription-identity {
+        grid-column: 1 / -1;
+    }
+
+    .subscription-detail:nth-of-type(3) {
+        grid-column: 1 / -1;
+    }
+
+    .delete-button {
+        width: 100%;
+        grid-column: 1 / -1;
+    }
+
+    .empty-state {
+        padding: 45px 18px;
+    }
+}
+
+@media (max-width: 370px) {
+    .main-content {
+        padding-right: 14px;
+        padding-left: 14px;
+    }
+
+    .hero h1 {
+        font-size: 2.3rem;
+    }
+
+    .subscription-card {
+        grid-template-columns: 1fr;
+    }
+
+    .subscription-identity,
+    .subscription-detail:nth-of-type(3),
+    .delete-button {
+        grid-column: auto;
+    }
+}

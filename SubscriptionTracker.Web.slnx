@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SubscriptionTracker.Web/SubscriptionTracker.Web.Client/SubscriptionTracker.Web.Client.csproj" />
+  <Project Path="SubscriptionTracker.Web/SubscriptionTracker.Web/SubscriptionTracker.Web.csproj" />
+</Solution>
