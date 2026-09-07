@@ -34,7 +34,7 @@ The project focuses on applying software design concepts through a practical C# 
 - **ASP.NET Core**
 - **Blazor**
 - **HTML & CSS**
-- **Render** — Deployment
+
 
 ---
 
@@ -62,10 +62,5 @@ SOLID principles were applied to keep the application organized, maintainable, a
 - **Open/Closed Principle (OCP)** — New subscription cost strategies can be added without changing the existing calculation logic.
 - **Dependency Inversion Principle (DIP)** — The application relies on abstractions such as interfaces rather than depending directly on concrete implementations.
 
----
 
-## 🎓 Acknowledgment
-
-This project was developed as part of the **Design Patterns in Software Development** program at **Tuwaiq Academy**.
-
-It was created as a practical application of **Design Patterns, SOLID principles, and Object-Oriented Programming concepts**.
+Developed as part of the Design Patterns in Software Development program at Tuwaiq Academy.
