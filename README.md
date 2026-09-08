@@ -63,4 +63,4 @@ SOLID principles were applied to keep the application organized, maintainable, a
 - **Dependency Inversion Principle (DIP)** — The application relies on abstractions such as interfaces rather than depending directly on concrete implementations.
 
 
-Developed as part of the Design Patterns in Software Development program at Tuwaiq Academy.
+
